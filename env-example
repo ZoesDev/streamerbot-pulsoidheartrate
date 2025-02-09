@@ -1,4 +1,5 @@
 streamerbotHost=127.0.0.1
 streamerbotPort=8080
 streamerbotPassword=NULL
+serverWSPort=3001
 Debug=false

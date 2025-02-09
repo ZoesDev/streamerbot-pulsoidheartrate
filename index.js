@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 require('dotenv').config();
 
 // Create a new WebSocket server for the overlay
-const overlayServer = new WebSocket.Server({ port: 3001 });
+const overlayServer = new WebSocket.Server({ port: process.env.serverWSPort });
 
 let overlaySocket = null;
 
