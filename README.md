@@ -1,5 +1,5 @@
 # streamerbot-Pulsoid Heart monitoring
-Side project for [Streamer.bot](https://streamer.bot) to log my chat to mysql using Nodejs and Streamerbots Websockets this is semi hacky as I do not have docker or any scripts setup to make it easier yet.
+Side project for [Streamer.bot](https://streamer.bot) to grab current event data from streamerbot to display pulsoid heart rate data on screen with a custom overlay
 
 ## Use at your own risk
 As I consider this code still as a 0.0.2 alpha code and as such things may change and break on you while I am working on adding new features to the code or fixing bugs. hoepfully someday I will have it 100% for my use case with a search and anylatics setup like I am wanting
