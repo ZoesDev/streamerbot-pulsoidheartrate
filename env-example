@@ -1,0 +1,4 @@
+streamerbotHost=127.0.0.1
+streamerbotPort=8080
+streamerbotPassword=NULL
+Debug=false

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Rate Overlay</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: transparent;
+            overflow: hidden;
+        }
+        .heart {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: relative;
+            transform: rotate(-45deg);
+            animation: pulse 1s infinite;
+        }
+        .heart::before, .heart::after {
+            content: "";
+            width: 100px;
+            height: 100px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart::before {
+            top: -50px;
+            left: 0;
+        }
+        .heart::after {
+            left: 50px;
+            top: 0;
+        }
+        .heart-rate {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            font-size: 24px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            z-index: 10; /* Ensure heart rate is always on top */
+            pointer-events: none; /* Prevent interactions */
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.2) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">
+        <div class="heart-rate">--</div>
+    </div>
+    <script>
+        function getWebSocketAddress() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get("ws") || "ws://localhost:3001";
+        }
+
+        let ws;
+        const websocketAddress = getWebSocketAddress();
+
+        function connectWebSocket() {
+            ws = new WebSocket(websocketAddress);
+
+            ws.onopen = () => {
+                console.log("Connected to WebSocket server at", websocketAddress);
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                const heartRate = data.heartRate;
+                
+                document.querySelector(".heart-rate").textContent = heartRate;
+                
+                // Adjust animation speed based on heart rate
+                const animationSpeed = Math.max(0.3, 60 / heartRate); // Prevent extreme speeds
+                document.querySelector(".heart").style.animation = `pulse ${animationSpeed}s infinite`;
+            };
+
+            ws.onerror = (error) => {
+                console.error("WebSocket error:", error);
+            };
+
+            ws.onclose = () => {
+                console.log("WebSocket connection lost. Reconnecting in 3 seconds...");
+                setTimeout(connectWebSocket, 3000);
+            };
+        }
+
+        connectWebSocket();
+    </script>
+</body>
+</html>
