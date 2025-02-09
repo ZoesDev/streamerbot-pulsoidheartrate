@@ -1,4 +1,4 @@
-# streamerbot-logging
+# streamerbot-Pulsoid Heart monitoring
 Side project for [Streamer.bot](https://streamer.bot) to log my chat to mysql using Nodejs and Streamerbots Websockets this is semi hacky as I do not have docker or any scripts setup to make it easier yet.
 
 ## Use at your own risk
